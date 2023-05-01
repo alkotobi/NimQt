@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "nim: debug current file",
+      "preLaunchTask": "nim: build current file (for debugging)",
+      "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}",
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/merhab/dev/nim/NimQt/Nim",
+      "program": "/Users/merhab/dev/nim/NimQt/Nim/build/Debug/outDebug"
+    }
+  ]
+}
