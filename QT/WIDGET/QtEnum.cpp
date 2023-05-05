@@ -1,8 +1,39 @@
 #include <Qt>
 #include "QtEnum.h"
 
+
 extern "C"
-int qt_alignment_flag(Alignment flag) {
+int qt_window_type_flags(WindowType flag) {
+    switch (flag) {
+
+        case Widget:
+            return Qt::Widget;
+        case Window:
+            return Qt::Window;
+        case Dialog:
+            return Qt::Dialog;
+        case Sheet:
+            return Qt::Sheet;
+        case Drawer:
+            return Qt::Drawer;
+        case Popup:
+            return Qt::Popup;
+        case Tool:
+            return Qt::Tool;
+        case ToolTip:
+            return Qt::ToolTip;
+        case SplashScreen:
+            return Qt::SplashScreen;
+        case SubWindow:
+            return Qt::SubWindow;
+        case ForeignWindow:
+            return Qt::ForeignWindow;
+        case CoverWindow:
+            return Qt::CoverWindow;
+    }
+}
+extern "C"
+int qt_alignment_flags(Alignment flag) {
     switch (flag) {
         default:
             break;

@@ -34,7 +34,7 @@ QtEnum.h
 QtEnum.cpp
 QHBoxLayout.h
 QHBoxLayout.cpp
-)
+        QFrame.cpp QFrame.h)
 target_link_libraries(Widget PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
 
 set(PROJECT_SOURCES

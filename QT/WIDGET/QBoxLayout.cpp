@@ -19,7 +19,7 @@ void qt_box_layout_add_layout_v1(QBoxLayout*self,QLayout *layout){
 
 extern "C"
 void qt_box_layout_add_widget(QBoxLayout*self,QWidget *widget, int stretch , Alignment alignment){
-    self->addWidget(widget,  stretch , (Qt::Alignment) qt_alignment_flag(alignment));
+    self->addWidget(widget,  stretch , (Qt::Alignment) qt_alignment_flags(alignment));
 }
 
 extern "C"
