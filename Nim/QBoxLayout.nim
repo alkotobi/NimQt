@@ -21,7 +21,7 @@ proc newQBoxLayout*(dir:Direction,parent:QWidget=nil):QBoxLayout=
 proc addLayout*(self:QBoxLayout,layout:QLayout,stretch:int=0)=
     qt_box_layout_add_layout(self.getObj,layout.getObj,stretch.cint)
 
-proc addWidget*(self:QBoxLayout,widget:QWidget,stretch:int,alignment:Alignment)=
+proc addWidget*(self:QBoxLayout,widget:QWidget,stretch:int,alignment:Alignment=Default)=
     qt_box_layout_add_widget(self.getObj,widget.getObj,stretch.cint,alignment.cint)
 
 proc addWidget*(self:QBoxLayout,widget:QWidget)=

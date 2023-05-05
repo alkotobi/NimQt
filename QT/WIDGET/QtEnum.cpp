@@ -65,6 +65,8 @@ int qt_alignment_flags(Alignment flag) {
             return Qt::AlignHorizontal_Mask;
         case AlignVertical_Mask:
             return Qt::AlignVertical_Mask;
+        case Default:
+            return Qt::Alignment();
     }
 
 }

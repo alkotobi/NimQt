@@ -1,5 +1,6 @@
 type
     Alignment* = enum
+      Default
       AlignLeft
       AlignRight
       AlignHCenter
