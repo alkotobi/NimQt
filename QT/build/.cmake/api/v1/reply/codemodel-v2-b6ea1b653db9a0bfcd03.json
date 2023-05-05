@@ -1,0 +1,121 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "WIDGET",
+					"jsonFile" : "directory-WIDGET-Debug-b4aab905090e5efa3519.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "WIDGET",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "QTWrap",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "Widget::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-Widget-Debug-892de1eeaf4fef32eddc.json",
+					"name" : "Widget",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Widget_autogen::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-Widget_autogen-Debug-268f6c4e11f029c2a101.json",
+					"name" : "Widget_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Widget_autogen_timestamp_deps::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-Widget_autogen_timestamp_deps-Debug-b9754fecc9a0dbffba17.json",
+					"name" : "Widget_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "cqt_test::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-cqt_test-Debug-c2da9e020fc474a2934c.json",
+					"name" : "cqt_test",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "cqt_test_autogen::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-cqt_test_autogen-Debug-e5fc7a53ea1cf777fb40.json",
+					"name" : "cqt_test_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "cqt_test_autogen_timestamp_deps::@17bc659f60cc4acadea2",
+					"jsonFile" : "target-cqt_test_autogen_timestamp_deps-Debug-393336082bdc275b0b4c.json",
+					"name" : "cqt_test_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/merhab/dev/nim/NimQt/QT/build",
+		"source" : "/Users/merhab/dev/nim/NimQt/QT"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

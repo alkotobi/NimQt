@@ -18,4 +18,3 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS true)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets REQUIRED)
 add_subdirectory(./WIDGET/)
-add_subdirectory(./Core/)

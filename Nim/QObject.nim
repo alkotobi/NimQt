@@ -1,10 +1,11 @@
-const core_lib* = "./libCore.dylib"
+const wid_lib* = "/Users/merhab/dev/nim/NimQt/QT/build/WIDGET/libWidget.dylib"
 type QTObject* =pointer
 
-proc qt_qobject_del(self: QTObject): void  {.importc: "qt_qobject_del", dynlib: core_lib}
-proc qt_qobject_new(self: QTObject): QTObject  {.importc: "qt_qobject_new", dynlib: core_lib}
-proc qt_object_set_parent(self: QTObject,parent:QTObject): void  {.importc: "qt_object_set_parent", dynlib: core_lib}
-proc qt_object_get_parent(self: QTObject): QTObject  {.importc: "qt_object_get_parent", dynlib: core_lib}
+proc qt_qobject_del(self: QTObject): void  {.importc: "qt_qobject_del", dynlib: wid_lib}
+proc qt_qobject_new(parent: QTObject): QTObject  {.importc: "qt_qobject_new", dynlib: wid_lib}
+proc qt_object_set_parent(self: QTObject,parent:QTObject): void  {.importc: "qt_object_set_parent", dynlib: wid_lib}
+proc qt_object_get_parent(self: QTObject): QTObject  {.importc: "qt_object_get_parent", dynlib: wid_lib}
+proc qt_object_set_object_name(self: QTObject,name:cstring): void  {.importc: "qt_object_set_object_name", dynlib: wid_lib}
 type
   QObject* = ref object of RootObj
     obj: QTObject
@@ -20,11 +21,8 @@ proc newQObject*(obj:QTObject, parent:QObject):QObject=
         result.obj= qt_qobject_new(nil)
 
 proc newQObject*(parent:QObject):QObject=
-    result=newQObject(qt_qobject_new(nil),parent) 
-
-
-
-
+    var obj = qt_qobject_new(nil)
+    result=newQObject(obj,parent) 
 
 proc getObj*(self:QObject): QTObject =
     return self.obj
@@ -37,15 +35,27 @@ proc setParent*(self:QObject,parent:QObject) =
     if not isNil(parent):
       qt_object_set_parent(self.obj,parent.obj)
     else:
-        qt_object_set_parent(self.obj,nil)
+      echo("else me")  
+      qt_object_set_parent(self.obj,nil)
     self.parent=parent
 
 proc setParent*(self:QObject,parent:QTObject) =
     qt_object_set_parent(self.obj,parent)
     self.parent = newQObject(parent,nil)
 
+# todo: test getParent
 proc getParent*(self:QObject): QObject =
+    var parent = qt_object_get_parent(self.getObj)
+    if not parent.isNil:
+       var obj= newQObject(parent,nil)
+       obj.setParent(obj.getParent)
+       return obj
+    else: return nil
+        
     result = self.parent
+
+proc setObjectName*(self:QObject,name:string)=
+    qt_object_set_object_name(self.getObj,name.cstring)
 
 
 proc free*(self: QObject) =

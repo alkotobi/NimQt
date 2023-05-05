@@ -4,7 +4,7 @@ proc qt_push_button_new(parent:QTObject): QTObject {.importc: "qt_push_button_ne
 type
     QPushButton* = ref object of QAbstractButton
 
-proc newQPushButton*(parent:QObject):QPushButton=
+proc newQPushButton*(parent:QWidget=nil):QPushButton=
     new result
     var obj = qt_push_button_new(nil)
     result.setObj(obj)

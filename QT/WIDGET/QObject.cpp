@@ -7,7 +7,7 @@ void qt_qobject_del(QObject* self)
 }
 
 extern "C"
-QObject* qt_qobject_new(QObject* self,QObject*parent=0)
+QObject* qt_qobject_new(QObject*parent)
 {
     return new (std::nothrow)QObject(parent);
 }
@@ -20,4 +20,9 @@ void qt_object_set_parent(QObject* self , QObject* parent){
 extern "C"
 QObject* qt_object_get_parent(QObject* self){
     return self->parent();
+}
+
+extern "C"
+void qt_object_set_object_name(QObject* self,const char* name){
+    self->setObjectName(name);
 }

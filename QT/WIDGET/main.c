@@ -3,6 +3,7 @@
 #include "QLabel.h"
 #include "QWidget.h"
 #include "QAbstractButton.h"
+#include "QAction.h"
 
 int main(int argc, char const *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char const *argv[])
     char* str = qt_label_get_text(lab);
     qt_abstractButton_set_text(btn,str);
     qt_widget_show(wid);
+    QAction* ac = qt_action_new(0);
     qt_app_exec(app);
     return 0;
 }

@@ -18,8 +18,24 @@ mncstring.h
 mncstring.c
 QLayout.h
 QLayout.cpp
+QAction.h
+QAction.cpp
+QIcon.h
+QIcon.cpp
+QObject.h
+QObject.cpp
+QString.h
+QString.cpp
+QVBoxLayout.cpp
+QVBoxLayout.h
+QBoxLayout.h
+QBoxLayout.cpp
+QtEnum.h
+QtEnum.cpp
+QHBoxLayout.h
+QHBoxLayout.cpp
 )
-target_link_libraries(Widget PRIVATE Qt6::Widgets)
+target_link_libraries(Widget PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
 
 set(PROJECT_SOURCES
         main.c

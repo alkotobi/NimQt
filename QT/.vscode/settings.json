@@ -86,6 +86,7 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "iostream": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "qobject.h": "c"
     }
 }
