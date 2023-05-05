@@ -42,12 +42,12 @@ QFrame* qt_frame_new(QWidget* parent,WindowType win_type){
 }
 
 extern "C"
-void qt_frame_set_frame_shape(QFrame* frame,Shape shape){
-    frame->setFrameShape((QFrame::Shape)qt_frame_shape_flags(shape));
+void qt_frame_set_frame_shape(QFrame* self,Shape shape){
+    self->setFrameShape((QFrame::Shape)qt_frame_shape_flags(shape));
 }
 
 extern "C"
-void qt_frame_set_frame_shadow(QFrame* frame,Shadow shadow){
-    frame->setFrameShadow((QFrame::Shadow)qt_frame_shadow_flags(shadow));
+void qt_frame_set_frame_shadow(QFrame* self,Shadow shadow){
+    self->setFrameShadow((QFrame::Shadow)qt_frame_shadow_flags(shadow));
 }
 
