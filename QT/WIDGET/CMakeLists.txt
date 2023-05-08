@@ -51,4 +51,5 @@ target_link_libraries(Widget PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
 set(PROJECT_SOURCES
         main.c
        )
-add_executable(cqt_test ${LIB_SOURCES} ${PROJECT_SOURCES})
+add_executable(cqt_test ${PROJECT_SOURCES})
+target_link_libraries(cqt_test PRIVATE Widget)
