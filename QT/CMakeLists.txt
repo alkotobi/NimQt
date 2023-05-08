@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.9)
-set(CMAKE_PREFIX_PATH "C:/Qt/6.5.0/static_build_debug/lib/cmake")
+if (win32)
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.5.0/static_build_debug/lib/cmake")
+endif (win32)
+if (UNIX)
+    set(CMAKE_PREFIX_PATH "~/dev/qt-everywhere-src-6.1.1/BUILD-STATIC/lib/cmake/")
+endif (UNIX)
 project(QTWrap)
 
 #====== Global Configurations ==================#
