@@ -1,4 +1,11 @@
-
+cmake_minimum_required(VERSION 3.25)
+if (win32)
+    set(CMAKE_PREFIX_PATH "C:/Qt/6.5.0/static_build_debug/lib/cmake")
+endif (win32)
+if (UNIX)
+    set(CMAKE_PREFIX_PATH "~/dev/qt-everywhere-src-6.1.1/BUILD-STATIC/lib/cmake/")
+endif (UNIX)
+project(wid_lib)
 include_directories(.)
 add_library(Widget SHARED 
 QApplication.cpp
@@ -37,6 +44,7 @@ QHBoxLayout.cpp
         QFrame.h
         QGridLayout.cpp
         QGridLayout.h)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui)
 target_link_libraries(Widget PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
 
 set(PROJECT_SOURCES
