@@ -5,8 +5,8 @@ import sugar
 import strutils
 
 
-const wid_lib* = "C:\\dev\\nim\\NimQt\\QT\\cmake-build-release\\WIDGET\\Widget.dll"
-import QAbstractButton
+const wid_lib = "../QT/build/WIDGET/libWidget.dylib"
+const core_lib = "../QT/build/Core/libCore.dylib"
 type 
     QApplication = pointer 
     QLineEdit    = pointer 
@@ -25,7 +25,7 @@ proc qt_app_new2(): QApplication {.importc: "qt_app_new2", dynlib: wid_lib}
 
 proc qt_app_exec2(qapp: QApplication): void {.importc: "qt_app_exec", dynlib: wid_lib}
 
-proc qt_qobject_del(self: QWidget): void  {.importc: "qt_qobject_del", dynlib: wid_lib}
+proc qt_qobject_del(self: QWidget): void  {.importc: "qt_qobject_del", dynlib: core_lib}
 
 # Set text and label
 
@@ -63,14 +63,13 @@ var button = qt_push_button_new(nil)
 
 
 # Using UFS - Universal function call 
-proc clicked()=
-    echo "clicked"
-button.onClickedConnect(nil)
-#   qt_button_onClicked(button, nil, () => (block:
-#       counter  = counter + 1
-#       echo (" [INFO] Button was clicked by user. Ok. =>> Counter = " & strutils.intToStr(counter))
-#       qt_msgbox_info(button, "Information", " Button was clicked => Counter = " & counter.intToStr() )
-#   ))
+
+
+  # qt_button_onClicked(button, nil, (ctx: Context) => (block:
+  #     counter  = counter + 1
+  #     echo (" [INFO] Button was clicked by user. Ok. =>> Counter = " & strutils.intToStr(counter))
+  #     qt_msgbox_info(button, "Information", " Button was clicked => Counter = " & counter.intToStr() )
+  # ))
 
 
  # qt_button_onClicked(button, nil) do (ctx: Context):

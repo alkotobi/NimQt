@@ -1,4 +1,4 @@
-const wid_lib* = "C:\\dev\\nim\\NimQt\\QT\\cmake-build-release\\WIDGET\\Widget.dll"
+const wid_lib* = "/Users/merhab/dev/nim/NimQt/QT/build/WIDGET/libWidget.dylib"
 type QTObject* =pointer
 
 proc qt_qobject_del(self: QTObject): void  {.importc: "qt_qobject_del", dynlib: wid_lib}

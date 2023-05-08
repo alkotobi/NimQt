@@ -5,8 +5,7 @@ import QPushButton,QWidget,QAbstractButton
     
 var app = newQApplication()
 var btn = newQPushButton(nil)
-proc onClick(){.cdecl.}=
-    echo "clicked"
+proc onClick()=
     btn.setText("clicked")
 btn.show
 btn.onClickedConnect(onClick)
