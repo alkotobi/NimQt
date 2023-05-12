@@ -5,7 +5,7 @@ proc qt_widget_set_layout(self: QTObject,layout:QTObject): void  {.importc: "qt_
 proc qt_widget_set_parent(self: QTObject,parent:QTObject): void  {.importc: "qt_widget_set_parent", dynlib: wid_lib}
 
 type
-    QWidget* =ref object of QObject
+    QWidget* =ref object of QLayoutItem
 
 proc newQWidget*(parent:QObject=nil):QWidget=
     var obj = qt_widget_new(nil)

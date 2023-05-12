@@ -70,3 +70,14 @@ int qt_alignment_flags(Alignment flag) {
     }
 
 }
+
+extern "C"
+int qt_orientation_flags(Orientation flag) {
+    switch (flag) {
+        case Horizontal:
+            return Qt::Horizontal;
+        case Vertical:
+            return Qt::Vertical;
+    }
+    return 0;
+}

@@ -17,7 +17,6 @@ lbl.setText("Nono")
 var hbox2 = newQHBoxLayout()
 hbox2.addWidget(lbl)
 vbox.addLayout(hbox2)
-wid.show
-
+wid.show()
 let res= app.exec
 echo res

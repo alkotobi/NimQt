@@ -7,3 +7,5 @@ test
 test_stack
 test2
 .DS_Store
+~/dev/nim/NimQt/.idea/
+~/dev/nim/NimQt/build/

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.21)
 if (win32)
     set(CMAKE_PREFIX_PATH "C:/Qt/6.5.0/static_build_debug/lib/cmake")
 endif (win32)
@@ -43,7 +43,9 @@ set(LIB_SOURCES
         QFrame.cpp
         QFrame.h
         QGridLayout.cpp
-        QGridLayout.h        )
+        QGridLayout.h
+        QSpacerItem.cpp
+        QSpacerItem.h)
 add_library(Widget SHARED ${LIB_SOURCES})
 find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui)
 target_link_libraries(Widget PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
