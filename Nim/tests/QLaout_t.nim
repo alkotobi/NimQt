@@ -8,8 +8,10 @@ var vbox = newQVBoxLayout()
 wid.setLayout(vbox)
 var hbox1 = newQHBoxLayout()
 var btn1 = newQPushButton(wid)
+proc click(){.cdecl.}=
+    btn1.setText("clicked")
 btn1.setText("kilck me")
-btn1.show
+btn1.onClickedConnect(click)
 hbox1.addWidget(btn1)
 vbox.addLayout(hbox1)
 var lbl = newQLabel(wid)
