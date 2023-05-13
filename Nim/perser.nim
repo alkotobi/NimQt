@@ -90,13 +90,29 @@ proc newStructOfQlayoutElements(file_name:string):string=
   var str = ""
   var x: XmlParser
   var ident="  "
+  var import_list = newSeq[string]()
   var s = newFileStream(filename, fmRead)
   open(x, s, filename)
+  var class = ""
+  var parent_name = ""
+  
+  while x.kind != xmlEof and x.elementName != "widget":
+    x.next()
+  x.next()
+  class = x.attrValue
+  # class.echo
+  x.next()
+  type UI = ref object of RootObj
+    n:int
+
+  parent_name = x.attrValue
+  str = &"type UI_{parent_name}* = ref object of RootObj\n"
   while x.kind != xmlEof:
     # x.echo
     if x.isAttributeOf "class":
       if x.kind == xmlAttribute:
         var class_name = x.attrValue
+        if class_name notin import_list: import_list.add class_name
         # echo "class_name:",class_name
         x.next()
         # x.echo
@@ -104,7 +120,7 @@ proc newStructOfQlayoutElements(file_name:string):string=
           if x.kind == xmlAttribute:
             var obj_name = x.attrValue
             # echo "obj_name:",obj_name
-            str = &"{str}{ident}{obj_name}:var {class_name}\n"
+            str = &"{str}{ident}{obj_name}: {class_name}\n"
             # str.echo
     elif x.isNodeOf("action") or 
     x.isNodeOf("spacer"):
@@ -115,26 +131,31 @@ proc newStructOfQlayoutElements(file_name:string):string=
         class_name = &"Q{x.element_name.capitalizeAscii}"
       else:
         class_name = &"Q{x.element_name.capitalizeAscii}Item"
+      if class_name notin import_list: import_list.add class_name
+      
       # class_name.echo
       # x.echo
       x.next()
       # x.echo
       if x.kind == xmlAttribute:
         var obj_name = x.attrValue
-        str = &"{str}{ident}{obj_name}:var {class_name}\n"
+        str = &"{str}{ident}{obj_name}: {class_name}\n"
         # echo "\n************************\n",str,"\n************************\n"
     x.next()
+  var s1 = ""
+  for imp in import_list : s1 = &"{s1},{imp}"
+  str = &"import {s1}\n{str}"  
   return str;
 
 proc widget_get_next_attribute(x:var XmlParser):tuple[key:string,val:string]=
+  x.next()
   while x.kind != xmlAttribute and x.kind != xmlEof:
     x.next()
   if x.kind == xmlAttribute:
-    x.echo
+    # x.echo
     result.key = x.attrKey
     result.val = x.attrValue
-    x.next
-    x.echo
+    # x.echo
 
 
 proc widget_get_name_and_class(x:var XmlParser):tuple[name:string,class:string]=
@@ -172,7 +193,10 @@ proc init_widgets(x:var XmlParser,parent_name:string):string=
     x.next()  
   return str
 
-proc init_widgets_properties(x:var XmlParser):string=
+proc init_widgets_properties(filename:string):string=
+  var s = newFileStream(filename, fmRead)
+  var x:XmlParser
+  open(x, s, filename)
   var str = ""
   while x.kind != xmlEof:
     if x.isGuiElementStart:
@@ -199,20 +223,23 @@ type
     parent_widget:  TNode
 
 proc echo(nd:TNode)=
+  echo "------------------------------------------"
   echo "class:",nd.class
   echo "name:",nd.name
   echo "row:",nd.row
   echo "col:",nd.col
-  echo "parent_node:",nd.parent_node.name
-  echo "parent_widget:",nd.parent_widget.name
+  if not nd.parent_node.isNil:
+    echo "parent_node:",nd.parent_node.name
+  if not nd.parent_widget.isNil:  
+    echo "parent_widget:",nd.parent_widget.name
 
 
 import stack
 proc widget_tree(x:var XmlParser,paren_widget:TNode): seq[TNode] =
   var s = newStack[TNode]()
+  var row= ""
+  var col = ""
   while x.kind != xmlEof:
-    var row= ""
-    var col = ""
     if x.elementName == "item":
       if x.kind == xmlElementOpen:#has attributes
         x.next()
@@ -230,16 +257,24 @@ proc widget_tree(x:var XmlParser,paren_widget:TNode): seq[TNode] =
       nd.name = ret.name
       nd.row = row
       nd.col = col
+      row =""
+      col =""
       nd.parent_widget = paren_widget
       s.push(nd)
       echo nd
     if x.isGuiElementEnd:
+      if s.isEmpty: 
+        x.next()
+        continue
       var nd = s.pop()
       if not s.isEmpty:
         nd.parent_node = s.getCurrent
+      else:
+        nd.parent_node = paren_widget
       result.add(nd)
       echo nd
     x.next()
+
 
 
 let layouts = @["QVBoxLayout","QGridLayout","QHBoxLayout"]
@@ -253,16 +288,7 @@ proc widget_lay_out*(list:var seq[TNode]):string=
     else:
       if nod.class in layouts:
         str = &"{str}  {nod.parent_node.name}.setLayout({nod.name})\n"
-
-
-    
-
-
-      
-
-
-    
-  echo ""
+  return str
  
 
 
@@ -629,65 +655,22 @@ when isMainModule:
     x.next()
   x.next()
   class = x.attrValue
-  class.echo
-  x.next
+  # class.echo
+  x.next()
   parent_name = x.attrValue
-  parent_name.echo
+  # parent_name.echo
+  var nd = new TNode
+  nd.name = parent_name
+  nd.parent_node =nil
+  nd.class = class
+  nd.parent_widget = nil
+  # nd.echo
+  var wid_tree = widget_tree(x,nd)
+  echo "tree done"
+  str = widget_lay_out(wid_tree) #
+  echo str
   # str =  init_widgets(x,parent_name)
-  str = init_widgets_properties(x)
+  str = init_widgets_properties(filename)
   echo "________________________________________"
   str.echo
   
-# while true:
-#   x.next()
-#   if x.kind == xmlEof: break
-# #   if x.kind == xmlAttribute:
-# #     echo "atrr_key: ", x.attrKey ," attr_val: ",x.attrValue
-# #   echo "kind: ",x.kind,"/ elem_name: ",x.elementName
-#   case x.kind
-#   of xmlElementOpen:
-#     is_open=true
-#     opened_element_names.push(x.elementName)
-#     if main_class_str == "" and x.elementName == "class":
-#         x.next()
-#         if x.kind == xmlCharData: main_class_str = &"type\n  Ui_{x.elementName} = ref object\n" 
-#     if x.elementName == "action":
-#         x.next()
-#         if x.kind == xmlAttribute:
-#             var str = &"    {x.attrValue} : Qaction\n"
-#             main_class_str = main_class_str & str 
-
-#     if x.elementName == "spacer":
-#         x.next()
-#         if x.kind == xmlAttribute:
-#             var str = &"    {x.attrValue} : QSpacerItem\n"
-#             main_class_str = main_class_str & str 
-#     if x.elementName == "layout" or x.elementName == "widget":
-#         var class_name:string = ""
-#         var name:string = ""
-#         x.next()
-#         if x.kind == xmlAttribute:
-#             class_name = x.attrValue
-#         x.next()
-#         if x.kind == xmlAttribute:
-#             name = x.attrValue
-#         var str = &"    {name} : {class_name}\n"
-#         main_class_str = main_class_str & str 
-#     echo "main_class_str= ",main_class_str
-
-        
-#     # if x.kind == xmlAttribute:
-#     #       echo "atrr key ", x.attrKey ," attr val: ",x.attrValue
-#     # echo "kind: ",x.kind,"/ elem name : ",x.elementName
-#     # if x.kind == xmlEntity: echo x.entityName
-# #   of xmlAttribute , xmlCharData:
-# #     echo "atrr key ", x.attrKey ," attr val: ",x.attrValue
-#   of xmlElementEnd:
-#     is_open = false 
-#     opened_element_names.pop()
-# #   of xmlElementOpen:
-# #     echo""   
-#   of xmlEof:
-#     break 
-#   else: discard
-# x.close
